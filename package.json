@@ -1,0 +1,15 @@
+{
+  "name": "hashrevolution-systemprofil",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:reactor": "esbuild ./src/reactor-assembly/scene.mjs --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/reactor-scene.bundle.js --legal-comments=linked",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

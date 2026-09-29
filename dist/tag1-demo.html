@@ -4,21 +4,92 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Tag 1 · NEXUS FIVE · technische Demonstration</title>
-  <link rel="stylesheet" href="tag1-demo.css?v=1">
-  <link rel="stylesheet" href="tag1-workflow.css?v=1">
-  <style>.controls{margin:18px 0 16px}</style>
-  <script src="tag1-demo.js?v=1" defer></script>
-  <script src="tag1-workflow.js?v=1" defer></script>
+  <link rel="stylesheet" href="tag1-demo.css?v=4">
+  <script type="module" src="tag1-demo.js?v=4"></script>
 </head>
 <body>
   <header><a href="./index.html#erleben">← Systemprofil</a><span>NEXUS FIVE / TAG 01</span><span>ISOLIERTE DEMO</span></header>
   <main>
-    <div class="intro"><div><span class="kicker">ECHTE REAKTORANSICHT / ÄLTERE QA-AUFNAHME</span><h1>Die Anlage fährt hoch.</h1><p>Die vier Bilder stammen aus einer früheren lokalen Prüfung der tatsächlichen Reaktoransicht. Der Ablauf hier ist eine öffentliche, vom Spielserver getrennte Demonstration – kein aktueller Live-Mitschnitt.</p></div><div class="stage-number" id="stage-number">01 / 04</div></div>
-    <div class="controls"><button id="step-back" type="button">← Zurück</button><button id="step-next" type="button">Startsequenz fortsetzen →</button><button id="step-auto" type="button">Ablauf abspielen</button></div>
-    <div class="reactor-stage"><img id="reactor-image" src="assets/reactor-qa/00-off.png" alt="Fünf dunkle Reaktoren um einen zentralen Kern"><div class="stage-status"><span id="stage-name">ANLAGE BEREIT</span><div class="progress"><i id="stage-progress"></i></div></div></div>
-    <section class="logic"><div><span class="kicker">WAS DAS SYSTEM TUT</span><h2>Fünf Fälle, getrennte Prüfstände.</h2><p>Die Anlage ist der visuelle Einstieg. Danach öffnet jede Reaktoreinheit einen eigenen Fall. Abgabe, Prüfung und gezielte Revision sind getrennte Zustände; der Schlussaudit kann erst nach den notwendigen Abschlüssen beginnen.</p></div><ol><li><strong>01 · Öffnen</strong><span>Ein Reaktor wird gezielt ausgewählt.</span></li><li><strong>02 · Bearbeiten</strong><span>Belege und Entscheidungen gehören zu diesem Fall.</span></li><li><strong>03 · Prüfen</strong><span>Eine Abgabe erhält einen eigenen Prüfstatus.</span></li><li><strong>04 · Revision</strong><span>Bei Bedarf wird nur der betroffene Reaktor wieder geöffnet.</span></li><li><strong>05 · Schlussaudit</strong><span>Erst nach den erforderlichen Abschlüssen freigeschaltet.</span></li></ol></section>
-    <section class="case-demo" aria-labelledby="case-title"><div class="case-head"><div><span class="kicker">ISOLIERTE ZUSTANDSSIMULATION</span><h2 id="case-title">Einen Prüfstand selbst durchspielen.</h2><p>Ein Reaktor wird abgegeben, geprüft und gegebenenfalls einzeln zur Revision geöffnet. Die folgenden Knöpfe simulieren die Regel – sie bearbeiten keine echte Akte.</p></div><button id="case-reset" type="button">Demostand zurücksetzen</button></div><div id="case-grid" class="case-grid" aria-label="Fünf simulierte Reaktoren"></div><div class="case-panel"><div><span class="kicker" id="case-label">REAKTOR 01</span><strong id="case-status">Offen</strong><p id="case-hint"></p></div><div class="case-actions"><button id="case-submit" type="button">Zur Prüfung abgeben</button><button id="case-revise" type="button">Revision anfordern</button><button id="case-approve" type="button">Abschluss bestätigen</button></div></div><p id="audit-status" class="audit-status" role="status">Schlussaudit gesperrt · 0 von 5 Prüfständen abgeschlossen.</p></section>
+    <section class="intro">
+      <span class="kicker">ORIGINALE 3D-REAKTORANLAGE · FIKTIVE DEMODATEN</span>
+      <h1>Die Anlage reagiert auf Entscheidungen.</h1>
+      <p>Öffne Reaktor 01 direkt in der Anlage. Die originale Kamerafahrt führt in den Kern; der anschließende Musterfall zeigt getrennte Abgabe-, Leitungs- und Freigabezustände. Es werden keine Spielstände berührt und keine Originalantworten gezeigt.</p>
+    </section>
+
+    <section class="reactor-layout" aria-label="Interaktive Reaktordemonstration">
+      <div class="reactor-column">
+        <div id="reactor-stage" class="reactor-stage" aria-label="Fünf Technologiereaktoren und zentraler Auditkern">
+          <canvas id="reactor-canvas" aria-label="Dreidimensionale Reaktoranlage"></canvas>
+          <div id="reactor-access" class="reactor-access" aria-label="Reaktoren auswählen"></div>
+          <div id="reactor-loading" class="reactor-loading" role="status">3D-Anlage wird geladen …</div>
+          <div id="flight-status" class="flight-status" role="status" hidden></div>
+          <div id="reactor-fallback" class="reactor-fallback" hidden>
+            <img src="assets/reactor-qa/03-operational.png" alt="Historische QA-Aufnahme der Reaktoranlage">
+            <p>Die 3D-Anlage konnte in diesem Browser nicht gestartet werden. Dieses Bild ist nur eine frühere QA-Aufnahme; die interaktive Demo ist hier nicht verfügbar.</p>
+          </div>
+        </div>
+        <ol id="reactor-status-list" class="reactor-status-list" aria-label="Stand der fünf Reaktoren"></ol>
+      </div>
+
+      <aside id="reactor-side" class="reactor-side" aria-live="polite">
+        <div id="map-panel" class="side-panel">
+          <span class="kicker">SYSTEMKERN / TEILNEHMERANSICHT</span>
+          <h2>Reaktor 01 ist bereit.</h2>
+          <p>Klicke auf den aktiven Zugang direkt in der Anlage. Weitere Kammern werden erst nach einer Abgabe erreichbar. Gesperrte Kammern sind sichtbar, aber nicht bedienbar.</p>
+          <p id="map-progress" class="progress-copy">0 / 5 qualifizierte Musterabgaben</p>
+          <button id="demo-reset" type="button" class="quiet-button">Demostand zurücksetzen</button>
+        </div>
+
+        <div id="case-panel" class="side-panel" hidden>
+          <span class="kicker">SYNTHETISCHER MUSTERFALL</span>
+          <h2 id="case-title">Reaktor 01</h2>
+          <p id="case-copy">Dieser Kurzfall ist nur ein Platzhalter für den technischen Ablauf; er enthält keine Spielaufgabe und keine Lösung.</p>
+          <form id="case-form" novalidate>
+            <label for="case-decision">Prüfentscheidung</label>
+            <select id="case-decision" required>
+              <option value="">Bitte wählen</option>
+              <option value="plausibel">Musterquelle plausibel</option>
+              <option value="unklar">Musterquelle unklar</option>
+              <option value="widerspruch">Widerspruch festhalten</option>
+            </select>
+            <label for="case-note">Kurzer Belegvermerk</label>
+            <textarea id="case-note" rows="5" placeholder="Welche fiktive Beobachtung stützt dein Votum?" required></textarea>
+            <p id="case-error" class="field-error" role="alert" hidden></p>
+            <button type="submit" class="primary-button">Musterfall abgeben</button>
+          </form>
+          <button id="case-back" type="button" class="quiet-button">← Zur Anlage</button>
+        </div>
+
+        <div id="audit-panel" class="side-panel" hidden>
+          <span class="kicker">REAKTOR 06 / SCHLUSSAUDIT</span>
+          <h2>Prüfgrundlage erreicht.</h2>
+          <p>Fünf qualifizierte Musterabgaben haben den zentralen Zugang geöffnet. Eine spätere Revision würde ihn wieder sperren. Der eigentliche Auditinhalt und die Spielantworten gehören nicht in diese öffentliche Vorschau.</p>
+          <button id="audit-back" type="button" class="quiet-button">← Zur Anlage</button>
+        </div>
+      </aside>
+    </section>
+
+    <p id="demo-message" class="demo-message" role="status">Die Anlage lädt. Nach der Startsequenz ist Reaktor 01 direkt im Bild bedienbar.</p>
+
+    <details class="director-demo">
+      <summary>Externes Leitungsereignis simulieren</summary>
+      <div class="director-inner">
+        <p>Die folgenden Knöpfe gehören ausdrücklich nicht zur Teilnehmeransicht. Sie demonstrieren eine getrennte Prüfung einer bereits eingegangenen Musterabgabe.</p>
+        <label for="review-target">Eingegangene Abgabe</label>
+        <select id="review-target"></select>
+        <div class="director-actions">
+          <button id="review-revision" type="button">Zur Revision öffnen</button>
+          <button id="review-approve" type="button">Abgabe bestätigen</button>
+        </div>
+      </div>
+    </details>
+
+    <section class="explanation">
+      <span class="kicker">WAS HIER WIRKLICH GEZEIGT WIRD</span>
+      <h2>Ein visueller Zugang, ein zustandsgebundener Ablauf.</h2>
+      <p>Das 3D-Modell und die Kamerafahrt stammen aus der freigegebenen Reaktoranlage. Nur die kurzen Musterentscheidungen sind für dieses öffentliche Profil erfunden. Die Demo zeigt nacheinander: gesperrter Zugang → Fallbearbeitung → eingegangene Abgabe → nächste Kammer → mögliche Leitungsrevision → Schlussaudit-Sperre oder -Freigabe. Das Originalspiel prüft deutlich mehr Eingaben und Belege serverseitig.</p>
+    </section>
   </main>
-  <footer>Historische QA-Bildfolge der echten Reaktoranlage; die Bedienelemente und Zustandstexte dieser Seite sind eine öffentliche Simulation ohne Produktionszugriff.</footer>
+  <footer>Öffentliche, isolierte Funktionsvorschau. Keine Produktions-API, keine echten Teilnehmenden und keine Originalantworten.</footer>
 </body>
 </html>

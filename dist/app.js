@@ -345,27 +345,29 @@
   });
 
   // Independent, spoiler-free models of three additional production rules.
-  const reactors = new Set();
+  let completedReactors = 0;
   function renderReactors() {
     const grid = $('#reactor-grid');
     grid.replaceChildren();
     for (let number = 1; number <= 5; number++) {
-      const button = element('button', reactors.has(number) ? 'done' : '', String(number).padStart(2, '0'));
+      const done = number <= completedReactors;
+      const button = element('button', done ? 'done' : '', String(number).padStart(2, '0'));
       button.type = 'button';
-      button.setAttribute('aria-pressed', String(reactors.has(number)));
-      button.setAttribute('aria-label', 'Reaktor ' + number + (reactors.has(number) ? ' abgeschlossen' : ' noch offen'));
+      button.disabled = number !== completedReactors + 1;
+      button.setAttribute('aria-pressed', String(done));
+      button.setAttribute('aria-label', 'Reaktor ' + number + (done ? ' abgegeben' : button.disabled ? ' gesperrt' : ' als Nächstes abgeben'));
       button.addEventListener('click', () => {
-        if (reactors.has(number)) reactors.delete(number);
-        else reactors.add(number);
+        if (number !== completedReactors + 1) return;
+        completedReactors = number;
         renderReactors();
       });
       grid.append(button);
     }
-    $('#reactor-output').textContent = reactors.size === 5
-      ? '5/5 Reaktoren abgeschlossen → Schlussaudit freigegeben.'
-      : reactors.size + '/5 Reaktoren abgeschlossen → Schlussaudit noch gesperrt.';
+    $('#reactor-output').textContent = completedReactors === 5
+      ? '5/5 Musterabgaben eingegangen → Schlussaudit freigegeben.'
+      : `${completedReactors}/5 Musterabgaben eingegangen → Reaktor ${String(completedReactors + 1).padStart(2, '0')} als Nächstes; Schlussaudit gesperrt.`;
   }
-  $('#reactor-reset').addEventListener('click', () => { reactors.clear(); renderReactors(); });
+  $('#reactor-reset').addEventListener('click', () => { completedReactors = 0; renderReactors(); });
 
   let selectedGroup = null;
   const groupNames = ['A', 'B', 'C', 'D', 'V'];
@@ -399,8 +401,8 @@
     const status = {
       bereit: 'Noch kein Anruf ausgelöst.',
       ringing: 'Status: klingelt. ' + route + 'Annehmen oder ablehnen ist jetzt möglich.',
-      accepted: 'Status: angenommen. Der Server hält den erfolgreichen Zustandswechsel fest.',
-      declined: 'Status: abgelehnt. Der Server hält den beendeten Zustandswechsel fest.'
+      accepted: 'Status: angenommen. Im Original hält der Server diesen Zustandswechsel fest.',
+      declined: 'Status: abgelehnt. Im Original hält der Server diesen Zustandswechsel fest.'
     };
     $('#call-output').textContent = status[callStatus];
   }

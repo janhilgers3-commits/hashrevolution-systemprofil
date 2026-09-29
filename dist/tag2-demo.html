@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="tag2-demo.css?v=1">
   <link rel="stylesheet" href="tag2-polish.css?v=1">
   <style>.group-card:hover,.group-card.selected,.group-card.selected:hover{background:#21162f;color:#f1eaff;border-color:#b98cff;box-shadow:inset 0 0 0 2px #b98cff}.group-card:hover span,.group-card:hover strong,.group-card.selected span,.group-card.selected strong{color:#f1eaff}</style>
-  <script src="tag2-demo.js?v=1" defer></script>
+  <script src="tag2-demo.js?v=2" defer></script>
 </head>
 <body>
 <main>
@@ -17,7 +17,7 @@
   <div class="demo-guide"><span id="step-label">01 / 04 · LOBBY</span><p id="guide-text">Einen erfundenen Namen eingeben. Diese Demo legt kein Konto an und sendet nichts an die Spielserver.</p></div>
 
   <section id="lobbyView">
-    <div class="lobby-card"><span class="section-label">TEILNEHMERANMELDUNG</span><h2>Username eintragen</h2><p>Melden Sie dieses Gerät mit einem eindeutigen Namen an. Das Pressearchiv bleibt bis zum gemeinsamen Start gesperrt.</p><form id="lobbyForm"><label>Username<input id="lobbyUsername" type="text" minlength="2" maxlength="30" autocomplete="off" placeholder="z. B. Testperson" required></label><button type="submit">Lobby beitreten</button></form><div id="lobbyWaiting" class="hidden"><div class="presence-count"><strong>1</strong><span>Testperson anwesend</span></div><p>Angemeldet als <b id="joinedUsername"></b></p><div class="waiting-pulse">WARTEN AUF GEMEINSAMEN START</div><button id="startDemo" type="button">Demo-Start auslösen</button></div></div>
+    <div class="lobby-card"><span class="section-label">TEILNEHMERANMELDUNG</span><h2 id="lobbyTitle">Username eintragen</h2><p id="lobbyHint">Melden Sie dieses Gerät mit einem eindeutigen Namen an. Das Pressearchiv bleibt bis zum gemeinsamen Start gesperrt.</p><form id="lobbyForm"><label>Username<input id="lobbyUsername" type="text" minlength="2" maxlength="30" autocomplete="off" placeholder="z. B. Testperson" required></label><button type="submit">Lobby beitreten</button></form><div id="lobbyWaiting" class="hidden"><div class="presence-count"><strong>1</strong><span>Gerät angemeldet</span></div><p>Angemeldet als <b id="joinedUsername"></b></p><div class="waiting-pulse">WARTEN AUF GEMEINSAMEN START</div><button id="startDemo" type="button">Demo-Start auslösen</button></div></div>
   </section>
 
   <section id="introView" class="hidden">
@@ -29,7 +29,7 @@
 
   <section id="groupView" class="hidden"><h2>Bildet Gruppen</h2><p>Jede Gruppe erhält eine eigene Perspektive. Die Auswahl kann bis zur verbindlichen Sperrung geändert werden.</p><div id="groupCards" class="group-grid"></div><div id="groupReadiness" class="group-readiness">A, B, C, D und V sind die anfänglich wählbaren Bereiche. E erscheint erst später im Spiel.</div><div id="groupConfirm" class="confirm hidden"><strong id="confirmText"></strong><p>Der gewählte Bereich öffnet in dieser Vorschau eine fiktive Archivansicht.</p><button id="confirmGroup" type="button">Gruppe auswählen</button><button id="cancelGroup" class="secondary" type="button">Abbrechen</button></div></section>
 
-  <section id="archiveView" class="hidden"><div class="archive-head"><div><h2 id="archiveTitle">ARCHIVSEGMENT</h2><p>Originalmaterial und zugeordnete Aufzeichnungen</p></div><div class="head-actions"><span id="groupBadge">GRUPPE A</span></div></div><div class="archive-layout"><nav id="archiveNav" aria-label="Demounterlagen"><button type="button" class="active" data-doc="report">Beispielprotokoll</button><button type="button" data-doc="timeline">Zeitlinie</button><button type="button" data-doc="notice">Hinweis</button></nav><article id="archiveText" class="archive-reader"></article></div><div class="demo-next"><p>Die echte Anwendung hat je Gruppe andere Unterlagen, Audio und zeitgesteuerte Übergänge. Diese Seite zeigt nur die Oberflächenlogik mit neutralen Texten.</p><button id="backGroups" type="button">Andere Perspektive wählen</button></div></section>
+  <section id="archiveView" class="hidden"><div class="archive-head"><div><h2 id="archiveTitle">ARCHIVSEGMENT</h2><p>Fiktive Unterlagen und zugeordnete Aufzeichnungen</p></div><div class="head-actions"><span id="groupBadge">GRUPPE A</span></div></div><div class="archive-layout"><nav id="archiveNav" aria-label="Demounterlagen"><button type="button" class="active" data-doc="report">Beispielprotokoll</button><button type="button" data-doc="timeline">Zeitlinie</button><button type="button" data-doc="notice">Hinweis</button></nav><article id="archiveText" class="archive-reader"></article></div><div class="demo-next"><p>Die echte Anwendung hat je Gruppe andere Unterlagen, Audio und zeitgesteuerte Übergänge. Gruppenfreigabe sowie Audio- und Schlüsselprüfung werden in dieser Vorschau übersprungen; hier sind nur neutrale Texte zu sehen.</p><button id="backGroups" type="button">Andere Perspektive wählen</button></div></section>
 </main>
 </body>
 </html>

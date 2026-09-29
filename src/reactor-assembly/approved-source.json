@@ -1,0 +1,17 @@
+{
+  "approvedVersion": "G01 Gesamtfreigabe 2026-09-12",
+  "scope": "overview-flight-and-case-detail",
+  "approvedStartup": "Neutral off; per-completion feed; pairwise collectors unchanged",
+  "soundApproval": "2026-09-13: bass-heavy six-reactor sounds, mechanical latch, final ignition, stable startup material queues",
+  "files": {
+    "app/reactor-assembly/scene.mjs": "121dfd70d3ac9edd8abd4b45d58f5ffd3fc487b2c62b1b1edbb07a6cecf1f733",
+    "app/reactor-assembly/scene.d.mts": "35f565c33932d80d8b60d5ee080c81c5f775dece03cf9808022643820e6e4136",
+    "app/reactor-assembly/assembly-parts.mjs": "7caac039ed687a7d9541543b86f41198342f2d7fbfb2c12462efc9c9ec060f92",
+    "app/reactor-assembly/detail-geometry.mjs": "589d408d5a1811d47644f0861661f4954642c45c34c46e9b0127e88a06bd887c",
+    "app/reactor-assembly/flight-path.mjs": "42a62d19550ec45a59d06362d5849b1fd73bc27cbe91e97043f9ee7e3da5d6f7",
+    "app/reactor-assembly/reactor-flight.mjs": "420e2b257b230912ffb8841c41f64f5eb6ede1d7a3959a4b525ebcf1a459bebc",
+    "app/reactor-assembly/tunnel-patterns.mjs": "3637e0fa84f5206da80bf00237eab4101fa03a2fb7b238b52b8aad1bc5a13300",
+    "app/reactor-assembly/tunnel-reflections.mjs": "7b7b85c55b6855f7245841c8eaed914d32ed209f7a78cf0eaa4b7d1c695c1eb4",
+    "public/reactor-assembly/signal-array-pilot-v3.glb": "1890d61725187ef10753ceb5ff4443716a431e4f5bb8d4602c3545fb444cf18c"
+  }
+}
