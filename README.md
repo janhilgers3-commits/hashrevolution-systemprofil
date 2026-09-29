@@ -4,7 +4,7 @@ Eigenständige, öffentliche Projektseite über Funktionen und Architektur der i
 
 Die statische Website liegt in [`dist/index.html`](dist/index.html). Sie enthält keine Spielstände, Zugänge, internen Dokumente oder Rätsellösungen und verlinkt nicht auf die produktive Spielumgebung.
 
-Die Veröffentlichung erfolgt über GitHub Pages aus dem Ordner `dist`. Das Repository und die Website sind unabhängig von den produktiven Spielservern.
+Die Veröffentlichung erfolgt über GitHub Pages aus dem Ordner `dist`: https://janhilgers3-commits.github.io/hashrevolution-systemprofil/ . Das Repository und die Website sind unabhängig von den produktiven Spielservern.
 
 ## Lokal ansehen
 
