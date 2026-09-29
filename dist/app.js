@@ -368,7 +368,7 @@
   $('#reactor-reset').addEventListener('click', () => { reactors.clear(); renderReactors(); });
 
   let selectedGroup = null;
-  const groupNames = ['A', 'B', 'C', 'D', 'V', 'E'];
+  const groupNames = ['A', 'B', 'C', 'D', 'V'];
   function renderGroups() {
     const grid = $('#group-grid');
     grid.replaceChildren();

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tag 1 · NEXUS FIVE · technische Demonstration</title>
+  <link rel="stylesheet" href="tag1-demo.css?v=1">
+  <link rel="stylesheet" href="tag1-workflow.css?v=1">
+  <style>.controls{margin:18px 0 16px}</style>
+  <script src="tag1-demo.js?v=1" defer></script>
+  <script src="tag1-workflow.js?v=1" defer></script>
+</head>
+<body>
+  <header><a href="./index.html#erleben">← Systemprofil</a><span>NEXUS FIVE / TAG 01</span><span>ISOLIERTE DEMO</span></header>
+  <main>
+    <div class="intro"><div><span class="kicker">ECHTE REAKTORANSICHT / ÄLTERE QA-AUFNAHME</span><h1>Die Anlage fährt hoch.</h1><p>Die vier Bilder stammen aus einer früheren lokalen Prüfung der tatsächlichen Reaktoransicht. Der Ablauf hier ist eine öffentliche, vom Spielserver getrennte Demonstration – kein aktueller Live-Mitschnitt.</p></div><div class="stage-number" id="stage-number">01 / 04</div></div>
+    <div class="controls"><button id="step-back" type="button">← Zurück</button><button id="step-next" type="button">Startsequenz fortsetzen →</button><button id="step-auto" type="button">Ablauf abspielen</button></div>
+    <div class="reactor-stage"><img id="reactor-image" src="assets/reactor-qa/00-off.png" alt="Fünf dunkle Reaktoren um einen zentralen Kern"><div class="stage-status"><span id="stage-name">ANLAGE BEREIT</span><div class="progress"><i id="stage-progress"></i></div></div></div>
+    <section class="logic"><div><span class="kicker">WAS DAS SYSTEM TUT</span><h2>Fünf Fälle, getrennte Prüfstände.</h2><p>Die Anlage ist der visuelle Einstieg. Danach öffnet jede Reaktoreinheit einen eigenen Fall. Abgabe, Prüfung und gezielte Revision sind getrennte Zustände; der Schlussaudit kann erst nach den notwendigen Abschlüssen beginnen.</p></div><ol><li><strong>01 · Öffnen</strong><span>Ein Reaktor wird gezielt ausgewählt.</span></li><li><strong>02 · Bearbeiten</strong><span>Belege und Entscheidungen gehören zu diesem Fall.</span></li><li><strong>03 · Prüfen</strong><span>Eine Abgabe erhält einen eigenen Prüfstatus.</span></li><li><strong>04 · Revision</strong><span>Bei Bedarf wird nur der betroffene Reaktor wieder geöffnet.</span></li><li><strong>05 · Schlussaudit</strong><span>Erst nach den erforderlichen Abschlüssen freigeschaltet.</span></li></ol></section>
+    <section class="case-demo" aria-labelledby="case-title"><div class="case-head"><div><span class="kicker">ISOLIERTE ZUSTANDSSIMULATION</span><h2 id="case-title">Einen Prüfstand selbst durchspielen.</h2><p>Ein Reaktor wird abgegeben, geprüft und gegebenenfalls einzeln zur Revision geöffnet. Die folgenden Knöpfe simulieren die Regel – sie bearbeiten keine echte Akte.</p></div><button id="case-reset" type="button">Demostand zurücksetzen</button></div><div id="case-grid" class="case-grid" aria-label="Fünf simulierte Reaktoren"></div><div class="case-panel"><div><span class="kicker" id="case-label">REAKTOR 01</span><strong id="case-status">Offen</strong><p id="case-hint"></p></div><div class="case-actions"><button id="case-submit" type="button">Zur Prüfung abgeben</button><button id="case-revise" type="button">Revision anfordern</button><button id="case-approve" type="button">Abschluss bestätigen</button></div></div><p id="audit-status" class="audit-status" role="status">Schlussaudit gesperrt · 0 von 5 Prüfständen abgeschlossen.</p></section>
+  </main>
+  <footer>Historische QA-Bildfolge der echten Reaktoranlage; die Bedienelemente und Zustandstexte dieser Seite sind eine öffentliche Simulation ohne Produktionszugriff.</footer>
+</body>
+</html>

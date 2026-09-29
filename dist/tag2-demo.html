@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tag 2 · Hierarchy Force · technische Demonstration</title>
+  <link rel="stylesheet" href="hierarchyforce-original.css?v=1">
+  <link rel="stylesheet" href="tag2-demo.css?v=1">
+  <link rel="stylesheet" href="tag2-polish.css?v=1">
+  <style>.group-card:hover,.group-card.selected,.group-card.selected:hover{background:#21162f;color:#f1eaff;border-color:#b98cff;box-shadow:inset 0 0 0 2px #b98cff}.group-card:hover span,.group-card:hover strong,.group-card.selected span,.group-card.selected strong{color:#f1eaff}</style>
+  <script src="tag2-demo.js?v=1" defer></script>
+</head>
+<body>
+<main>
+  <div class="demo-strip"><a href="./index.html#erleben">← SYSTEMPROFIL</a><span>ÖFFENTLICHE DEMO · ORIGINAL-DESIGNSYSTEM · FIKTIVE DATEN</span><button id="reset" type="button">Neu beginnen</button></div>
+  <header><div><h1 id="mainTitle">L&amp;B EINSATZLOBBY</h1><p id="mainSubtitle">Anmeldung vor dem gemeinsamen Start</p></div><span id="statusBadge">LOBBY</span></header>
+  <div class="demo-guide"><span id="step-label">01 / 04 · LOBBY</span><p id="guide-text">Einen erfundenen Namen eingeben. Diese Demo legt kein Konto an und sendet nichts an die Spielserver.</p></div>
+
+  <section id="lobbyView">
+    <div class="lobby-card"><span class="section-label">TEILNEHMERANMELDUNG</span><h2>Username eintragen</h2><p>Melden Sie dieses Gerät mit einem eindeutigen Namen an. Das Pressearchiv bleibt bis zum gemeinsamen Start gesperrt.</p><form id="lobbyForm"><label>Username<input id="lobbyUsername" type="text" minlength="2" maxlength="30" autocomplete="off" placeholder="z. B. Testperson" required></label><button type="submit">Lobby beitreten</button></form><div id="lobbyWaiting" class="hidden"><div class="presence-count"><strong>1</strong><span>Testperson anwesend</span></div><p>Angemeldet als <b id="joinedUsername"></b></p><div class="waiting-pulse">WARTEN AUF GEMEINSAMEN START</div><button id="startDemo" type="button">Demo-Start auslösen</button></div></div>
+  </section>
+
+  <section id="introView" class="hidden">
+    <div class="article-display-tabs" role="tablist" aria-label="Darstellung"><button id="showImages" class="active" type="button" aria-selected="true">ORIGINALANSICHT</button><button id="showTranscript" type="button" aria-selected="false">TRANSKRIPT</button></div>
+    <div id="articleImages" class="demo-article"><article class="demo-paper"><div class="demo-masthead"><span>ARCHIVBLATT</span><span>ÖFFENTLICHE MUSTERSEITE · 09/2026</span></div><small>FIKTIVER BEISPIELBESTAND · KEIN ORIGINALARTIKEL</small><h2>Verteilte Aktenansichten</h2><p class="demo-deck">Wie sich eine gemeinsame Untersuchung in mehrere geschützte Perspektiven aufteilt.</p><div class="demo-columns"><div><h3>Ein gemeinsamer Beginn</h3><p>Nach dem Start öffnet die Anwendung einen Bestand, der für alle Teilnehmenden denselben Einstieg zeigt. Die anschließende Segmentwahl bestimmt, welche Unterlagen eine Gruppe weiter bearbeiten kann.</p><p>Diese Musterseite demonstriert Spaltenbild, Dokumentansicht und Wechsel zum Transkript. Sie enthält keinen Text aus der Spielgeschichte.</p></div><div><h3>Getrennte Perspektiven</h3><p>Jeder Arbeitsbereich erhält einen eigenen Lesestand. Freigaben und Zeitfenster bestimmen, wann neue Bestandteile sichtbar werden; die Oberfläche reagiert auf den serverseitigen Zustand.</p><p>Die hier gezeigten Namen, Daten und Absätze sind für die öffentliche Demonstration erfunden.</p></div></div><div class="demo-paper-foot">MUSTERSEITE // ORIGINALINHALTE GESCHÜTZT</div></article></div>
+    <article id="articleTranscript" class="article-transcript hidden">Dies ist eine neutrale Vorschau auf die Transkriptansicht. Im Spiel ist sie mit dem sichtbaren Originalartikel verbunden. Originaltext, Rätsel und Lösung werden hier nicht veröffentlicht.</article>
+    <div class="demo-next"><p>Im echten Ablauf führt die Auswertung des Artikels zur Segmentzuweisung. Diese öffentliche Demo überspringt die Rätselantwort.</p><button id="toGroups" type="button">Segmentzuweisung zeigen →</button></div>
+  </section>
+
+  <section id="groupView" class="hidden"><h2>Bildet Gruppen</h2><p>Jede Gruppe erhält eine eigene Perspektive. Die Auswahl kann bis zur verbindlichen Sperrung geändert werden.</p><div id="groupCards" class="group-grid"></div><div id="groupReadiness" class="group-readiness">A, B, C, D und V sind die anfänglich wählbaren Bereiche. E erscheint erst später im Spiel.</div><div id="groupConfirm" class="confirm hidden"><strong id="confirmText"></strong><p>Der gewählte Bereich öffnet in dieser Vorschau eine fiktive Archivansicht.</p><button id="confirmGroup" type="button">Gruppe auswählen</button><button id="cancelGroup" class="secondary" type="button">Abbrechen</button></div></section>
+
+  <section id="archiveView" class="hidden"><div class="archive-head"><div><h2 id="archiveTitle">ARCHIVSEGMENT</h2><p>Originalmaterial und zugeordnete Aufzeichnungen</p></div><div class="head-actions"><span id="groupBadge">GRUPPE A</span></div></div><div class="archive-layout"><nav id="archiveNav" aria-label="Demounterlagen"><button type="button" class="active" data-doc="report">Beispielprotokoll</button><button type="button" data-doc="timeline">Zeitlinie</button><button type="button" data-doc="notice">Hinweis</button></nav><article id="archiveText" class="archive-reader"></article></div><div class="demo-next"><p>Die echte Anwendung hat je Gruppe andere Unterlagen, Audio und zeitgesteuerte Übergänge. Diese Seite zeigt nur die Oberflächenlogik mit neutralen Texten.</p><button id="backGroups" type="button">Andere Perspektive wählen</button></div></section>
+</main>
+</body>
+</html>

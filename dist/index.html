@@ -7,32 +7,50 @@
   <meta name="theme-color" content="#071611">
   <title>HashRevolution · Technisches Systemprofil</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071611'/%3E%3Cpath d='M14 32h12m12 0h12M32 14v12m0 12v12' stroke='%2332ef94' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%2332ef94'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=showcase3">
+  <link rel="stylesheet" href="showcase-polish.css?v=1">
+  <link rel="stylesheet" href="hero-visual.css?v=1">
+  <script src="app.js?v=showcase3" defer></script>
 </head>
 <body>
-  <a class="skip" href="#labor">Zur Demonstration springen</a>
+  <a class="skip" href="#erleben">Zur Demonstration springen</a>
   <header class="site-header"><div class="wrap header-inner">
     <a class="brand" href="#start">HASH<span>REVOLUTION</span><small>TECHNISCHES SYSTEMPROFIL</small></a>
-    <nav aria-label="Seitenbereiche"><a href="#labor">Live-Demo</a><a href="#systeme">Funktionen</a><a href="#debriefing">Debriefing</a><a href="#architektur">Architektur</a></nav>
+    <nav aria-label="Seitenbereiche"><a href="#erleben">Produkt erleben</a><a href="#systeme">Funktionen</a><a href="#debriefing">Debriefing</a><a href="#architektur">Architektur</a></nav>
   </div></header>
 
   <main id="start">
     <section class="intro wrap" aria-labelledby="page-title">
       <div><span class="eyebrow">Interaktive Plattform · Drei Spieltage · Ein Zustandsmodell</span>
-      <h1 id="page-title">Nicht nur lesen. <em>Den Ablauf ausprobieren.</em></h1>
-      <p>HashRevolution verbindet Quiz, fünf Technologiereaktoren, sechs Ermittlungswege, Archivsuche, gemeinsames Beweisboard und Debriefing. Das Systemlabor unten zeigt mit neutralen Beispieldaten, wie Eingaben zu Zustandswechseln und Freigaben führen.</p></div>
-      <aside class="intro-facts" aria-label="Projektumfang"><div><strong>03</strong><span>aufeinander aufbauende Spieltage</span></div><div><strong>06</strong><span>Ermittlungswege an Tag 2</span></div><div><strong>451</strong><span>durchsuchbare Archivunterlagen im Originalbestand</span></div></aside>
+      <h1 id="page-title">Drei Tage. <em>Ein vernetztes System.</em></h1>
+      <p>Reaktoren starten, Perspektiven wechseln, Belege auf dem Ermittlungsboard verknüpfen. Drei bedienbare Demonstrationen zeigen die Oberflächen mit erfundenen Daten – ohne Spielzugang.</p><div class="intro-actions"><a class="action-button" href="#erleben">Die drei Oberflächen erleben ↓</a><a class="action-button subtle" href="board-demo.html">Board direkt öffnen ↗</a></div></div>
+      <a class="intro-visual" href="tag1-demo.html" aria-label="Echte Reaktoranlage aus älterer QA-Aufnahme öffnen"><img src="assets/reactor-qa/02-inner-rings.png" alt="Fünf Reaktoren um einen Kern; der erste Reaktor fährt hoch"><span>TAG 01 · ECHTE REAKTORANSICHT · QA-AUFNAHME ↗</span></a>
     </section>
 
-    <section id="labor" class="labor-section" aria-labelledby="labor-title"><div class="wrap">
-      <div class="section-head"><div><span class="eyebrow">Systemlabor / isolierte Demo</span><h2 id="labor-title">Ein Vorgang, vier Zustände.</h2></div><p>Alle Aktionen hier laufen ausschließlich in diesem Browserfenster. Die Beispieldokumente sind erfunden; weder Spielserver noch echte Spielstände werden berührt.</p></div>
+    <section id="erleben" class="showcase-section" aria-labelledby="showcase-title"><div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Produktfolge / drei Spieltage</span><h2 id="showcase-title">Von der Prüfung zum belegten Zusammenhang.</h2></div><p>Jeder Tag verändert, welche Informationen verfügbar sind und was als Nächstes entschieden werden darf. Der Ausschnitt darunter ist interaktiv, aber vollständig vom Spielserver getrennt.</p></div>
+      <nav class="demo-jump" aria-label="Direkt zu den Demos"><a href="tag1-demo.html">01 · Reaktorstart ↗</a><a href="tag2-demo.html">02 · Pressearchiv ↗</a><a href="board-demo.html">03 · Ermittlungsboard ↗</a></nav>
+      <div class="live-showcase">
+        <div class="live-showcase-head"><div><span class="eyebrow">01 / NEXUS FIVE</span><h3>Die Reaktoranlage fährt hoch.</h3><p>Vier echte Aufnahmen der Reaktoransicht aus einer früheren lokalen QA; die Steuerung ist eine öffentliche Simulation. Keine Spielantworten, keine Verbindung zum Livesystem.</p></div><a class="action-button" href="tag1-demo.html">Im Vollbild steuern ↗</a></div>
+        <a class="reactor-teaser" href="tag1-demo.html"><img src="assets/reactor-qa/03-operational.png" alt="Echte Reaktoranlage aus einer älteren lokalen QA-Aufnahme; der erste von fünf Reaktoren ist betriebsbereit"><span>Startsequenz und Prüfstände selbst bedienen ↗</span></a>
+      </div>
+      <div class="live-showcase">
+        <div class="live-showcase-head"><div><span class="eyebrow">02 / HIERARCHY FORCE</span><h3>Von der Lobby zur getrennten Akte.</h3><p>Das Designsystem stammt aus der Originalanwendung; der Demoablauf verwendet erfundene Inhalte. Mit einem fiktiven Namen lassen sich Pressearchiv, Segmentwahl und gruppenbezogene Lesefläche ausprobieren.</p></div><a class="action-button" href="tag2-demo.html">Im Vollbild durchgehen ↗</a></div>
+        <iframe class="live-showcase-frame relay-frame" src="tag2-demo.html" title="Bedienbare Hierarchy-Force-Demo mit fiktiven Daten" loading="lazy"></iframe>
+      </div>
+      <div class="board-showcase-head"><div><span class="eyebrow">Interaktive, isolierte Board-Mechanik</span><h3>Ermittlungsboard</h3><p>Unterlage öffnen, Textstelle direkt auf der Seite ziehen, Belegkarte anheften, Karten verbinden und Arbeitsstände ändern. Alle Inhalte sind synthetisch; es gibt keine Verbindung zu echten Spielständen.</p></div><a class="action-button" href="board-demo.html">Im Vollbild öffnen ↗</a></div>
+      <iframe class="board-showcase-frame" src="board-demo.html" title="Interaktive Ermittlungsboard-Demonstration mit erfundenen Daten" loading="lazy"></iframe>
+      <p class="showcase-note">Die eingebettete Ansicht ist eine öffentliche Simulation der Board-Bedienung. Sie zeigt keine realen Unterlagen oder Live-Synchronisierung.</p>
+    </div></section>
+
+    <section id="labor" class="labor-section" aria-labelledby="labor-title" hidden><div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Technisches Systemlabor / schematisches Datenmodell</span><h2 id="labor-title">Ein Vorgang, vier Zustände.</h2></div><p>Hier lassen sich die Freigabe- und Übergangsregeln vereinfacht durchspielen. Die Oberfläche ist ausdrücklich ein Datenmodell, keine Nachbildung des echten Ermittlungsboards; dieses steht oben als Vollbild-Demo bereit.</p></div>
       <div class="lab-shell">
         <div class="lab-rail" aria-label="Demonstrationsschritte">
           <div class="rail-top"><span>DEMO-LAUF 01</span><button id="demo-reset" type="button">Neu beginnen</button></div>
           <div class="step-list" role="tablist" aria-label="Systemlabor">
             <button class="step active" type="button" role="tab" aria-selected="true" aria-controls="panel-search" id="tab-search" data-view="search"><span>01</span><strong>Archivsuche</strong><small>Unterlagen finden</small></button>
-            <button class="step" type="button" role="tab" aria-selected="false" aria-controls="panel-board" id="tab-board" data-view="board"><span>02</span><strong>Ermittlungsboard</strong><small>Belege und Verbindungen</small></button>
+            <button class="step" type="button" role="tab" aria-selected="false" aria-controls="panel-board" id="tab-board" data-view="board"><span>02</span><strong>Board-Datenmodell</strong><small>Einträge und Relationen</small></button>
             <button class="step" type="button" role="tab" aria-selected="false" aria-controls="panel-gate" id="tab-gate" data-view="gate"><span>03</span><strong>Freigabe</strong><small>Geprüfter Übergang</small></button>
             <button class="step" type="button" role="tab" aria-selected="false" aria-controls="panel-finish" id="tab-finish" data-view="finish"><span>04</span><strong>Debriefing</strong><small>Auswertung</small></button>
           </div>
@@ -49,8 +67,8 @@
           </section>
 
           <section class="lab-panel" id="panel-board" role="tabpanel" aria-labelledby="tab-board" hidden>
-            <div class="workspace-head"><div><span class="workspace-kicker">EIGENER / GEMEINSAMER ARBEITSSTAND</span><h3>Ermittlungsboard</h3></div><span class="mode-tag">LIVE IM BROWSER</span></div>
-            <p>Übernommene Unterlagen werden zu Einträgen. Status, Notizen und Verknüpfungen verändern den Arbeitsstand; eigene Änderungen lassen sich hier rückgängig machen.</p>
+            <div class="workspace-head"><div><span class="workspace-kicker">SCHEMATISCHER ARBEITSSTAND</span><h3>Board-Datenmodell</h3></div><span class="mode-tag">VEREINFACHT</span></div>
+            <p>Diese Liste macht die Status- und Freigaberegeln des Systemlabors sichtbar; sie ist nicht die echte Board-Oberfläche. Das <a href="board-demo.html">interaktive Ermittlungsboard im Vollbild</a> zeigt die räumliche Leinwand, Dokumentseiten und Belegmarkierung.</p>
             <div class="board-toolbar"><label for="board-query">Board durchsuchen<input id="board-query" type="search" placeholder="Titel oder Notiz"></label><label for="board-status">Arbeitsstatus<select id="board-status"><option value="all">Alle</option><option value="Offen">Offen</option><option value="In Prüfung">In Prüfung</option><option value="Abgeglichen">Abgeglichen</option><option value="Widerspruch offen">Widerspruch offen</option></select></label></div>
             <div id="board-list" class="board-list"></div>
             <div class="board-actions"><div><h4>Verbindung herstellen</h4><div class="connect-controls"><label for="link-from">Von<select id="link-from"></select></label><label for="link-to">Zu<select id="link-to"></select></label><button id="connect-button" class="action-button" type="button">Verknüpfen</button></div></div><div><h4>Eigene Notiz</h4><div class="note-controls"><label for="note-title">Kurzer Titel<input id="note-title" type="text" maxlength="60" placeholder="z. B. Rückfrage zum Zeitstempel"></label><button id="add-note" class="action-button subtle" type="button">Notiz anlegen</button></div></div></div>
@@ -90,7 +108,7 @@
       <div class="mini-heading"><span class="eyebrow">Drei weitere interaktive Zustandsbeispiele</span><h3>Auch die anderen Spieltage haben Regeln, nicht nur Seiten.</h3><p>Diese Modelle zeigen echte Regelprinzipien mit erfundenen Daten. Sie sind bewusst kleiner als die Originalanwendungen.</p></div>
       <div class="mini-grid">
         <article class="mini-demo" aria-labelledby="reactor-title"><span class="workspace-kicker">TAG 1 / NEXUS FIVE</span><h4 id="reactor-title">Fünf Reaktoren, ein Schlussaudit</h4><p>Reaktoren können einzeln bearbeitet und zur Prüfung abgegeben werden. Erst fünf abgeschlossene Fälle geben den Schlussaudit frei.</p><div id="reactor-grid" class="reactor-grid" aria-label="Reaktorstatus"></div><p id="reactor-output" class="mini-output" role="status"></p><button id="reactor-reset" class="text-button" type="button">Reaktoren zurücksetzen</button></article>
-        <article class="mini-demo" aria-labelledby="group-title"><span class="workspace-kicker">TAG 2 / HIERARCHY FORCE</span><h4 id="group-title">Sechs Perspektiven, getrennte Freigabe</h4><p>Eine Gruppe sieht zunächst nur ihre eigene neutrale Sicht. Eine zeitliche Sperre und eine Intervention können den nächsten Schritt blockieren.</p><div id="group-grid" class="group-grid" aria-label="Ermittlungswege"></div><div class="mini-switches"><label><input id="time-gate" type="checkbox"> Zeitfenster freigegeben</label><label><input id="intervention" type="checkbox"> Intervention aktiv</label></div><p id="group-output" class="mini-output" role="status"></p></article>
+        <article class="mini-demo" aria-labelledby="group-title"><span class="workspace-kicker">TAG 2 / HIERARCHY FORCE</span><h4 id="group-title">Getrennte Perspektiven, getrennte Freigabe</h4><p>Anfänglich sind A, B, C, D und V wählbar; E wird erst später zugänglich. Eine zeitliche Sperre und eine Intervention können den nächsten Schritt blockieren.</p><div id="group-grid" class="group-grid" aria-label="Ermittlungswege"></div><div class="mini-switches"><label><input id="time-gate" type="checkbox"> Zeitfenster freigegeben</label><label><input id="intervention" type="checkbox"> Intervention aktiv</label></div><p id="group-output" class="mini-output" role="status"></p></article>
         <article class="mini-demo" aria-labelledby="call-title"><span class="workspace-kicker">GERÄTEÜBERGREIFEND / ANRUF</span><h4 id="call-title">Vom Auslösen bis zur Annahme</h4><p>Die Leitung startet einen Ereigniszustand; das Smartphone erhält bei erlaubten Benachrichtigungen einen Push, eine offene App kann den Anruf direkt zeigen.</p><div class="call-controls"><label for="call-route">Zustellung<select id="call-route"><option value="app">App bereits offen</option><option value="push">App im Hintergrund / Push</option></select></label><button id="call-start" class="action-button" type="button">Anruf auslösen</button><button id="call-accept" class="action-button subtle" type="button">Annehmen</button><button id="call-decline" class="action-button subtle" type="button">Ablehnen</button></div><p id="call-output" class="mini-output" role="status"></p><small class="caveat">Nur Statussimulation: kein echter Anruf, keine Audioausgabe und keine Garantie für Betriebssystem-Push ohne Gerätefreigabe.</small></article>
       </div>
     </div></section>
