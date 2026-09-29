@@ -44,12 +44,14 @@
     debriefToggle.addEventListener('click', () => {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       debriefToggle.disabled = true;
+      debriefToggle.textContent = 'Öffnung läuft …';
       debriefStage.classList.remove('replaying');
       void debriefStage.offsetWidth;
       debriefStage.classList.add('replaying');
       window.setTimeout(() => {
         debriefStage.classList.remove('replaying');
         debriefToggle.disabled = false;
+        debriefToggle.textContent = 'Erneut abspielen';
       }, 2250);
     });
   </script>
