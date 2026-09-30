@@ -1,4 +1,9 @@
 :root{color-scheme:dark}
+.eb-guide{display:grid;grid-template-columns:1fr;gap:.25rem;padding:.65rem 1.75rem;border-bottom:1px solid #2c4b43;background:#11231f;color:#c9ded3;font:12px/1.45 Inter,Arial,sans-serif;flex-shrink:0}
+.eb-guide strong{color:#91eab9;font:700 11px/1.4 Consolas,monospace;letter-spacing:.08em}
+.eb-guide span{display:block}
+.eb-guide small{color:#9fbdad;font-size:11px}
+.eb-stamp{display:none}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a1216}
 .eb{display:flex;flex-direction:column}
 .eb-ident h1{font-size:19px;letter-spacing:.02em;margin:0;font-weight:500;color:#e2ece8}
@@ -54,3 +59,4 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a1216}
 .demo-reader-foot select{min-width:100px;color:#d9e6dd;background:#0a181c;border:1px solid #466558;padding:8px}
 .demo-reader-foot span{color:#b2c9b9;flex:1;min-width:170px}
 @media(max-width:700px){.eb-head{padding:10px 14px}.eb-ident h1{font-size:16px}.eb-close{font-size:11px}.eb-people{display:none}.eb-toolbar{flex-wrap:wrap;overflow-x:visible}.eb-toolbar .eb-board-search{max-width:none;flex:1 1 150px}.eb-panel{width:min(330px,100%)}.eb-marker-editor label{flex:1 1 100%;min-width:0}.eb-marker-editor label:nth-child(2){flex:1 1 100%}.eb-marker-editor textarea{max-height:65px}.eb-marker-editor button{margin-top:0}}
+@media(max-width:700px){.eb-guide{padding:.55rem .75rem;font-size:11px}.eb-guide small{font-size:10px}}

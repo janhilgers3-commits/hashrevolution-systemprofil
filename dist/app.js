@@ -279,17 +279,46 @@
     { id: 'm3', day: '3', title: 'Belege verknüpfen', detail: 'Archivsuche, Notiz und Verbindung halten fest, auf welche Unterlage sich eine Aussage stützt.' },
     { id: 'm4', day: '3', title: 'Freigabe begründen', detail: 'Ein Übergang erfolgt erst, wenn der vorherige Stand ausreichend geprüft ist.' }
   ];
+  const mapEdges = [['m1', 'm2'], ['m1', 'm3'], ['m2', 'm3'], ['m3', 'm4']];
   let selectedMapNode = null;
+  function drawMapEdges() {
+    const list = $('#map-nodes');
+    const svg = list.querySelector('.map-edges');
+    if (!svg || !list.getClientRects().length) return;
+    const frame = list.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${frame.width} ${frame.height}`);
+    svg.replaceChildren();
+    for (const [from, to] of mapEdges) {
+      const start = list.querySelector(`[data-node-id="${from}"]`);
+      const end = list.querySelector(`[data-node-id="${to}"]`);
+      if (!start || !end) continue;
+      const a = start.getBoundingClientRect();
+      const b = end.getBoundingClientRect();
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', String(a.left + a.width / 2 - frame.left));
+      line.setAttribute('y1', String(a.top + a.height / 2 - frame.top));
+      line.setAttribute('x2', String(b.left + b.width / 2 - frame.left));
+      line.setAttribute('y2', String(b.top + b.height / 2 - frame.top));
+      line.classList.toggle('active', from === selectedMapNode || to === selectedMapNode);
+      svg.append(line);
+    }
+  }
   function renderMap() {
     const filter = $('#map-filter').value;
     const visible = mapNodes.filter((node) => filter === 'all' || node.day === filter);
     if (!visible.some((node) => node.id === selectedMapNode)) selectedMapNode = visible[0]?.id ?? null;
     const list = $('#map-nodes');
     list.replaceChildren();
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('map-edges');
+    svg.setAttribute('aria-hidden', 'true');
+    list.append(svg);
     for (const node of visible) {
       const button = element('button');
       button.type = 'button';
+      button.dataset.nodeId = node.id;
       button.classList.toggle('selected', node.id === selectedMapNode);
+      button.classList.toggle('related', mapEdges.some(([from, to]) => (from === selectedMapNode && to === node.id) || (to === selectedMapNode && from === node.id)));
       button.setAttribute('aria-pressed', String(node.id === selectedMapNode));
       button.append(element('span', '', node.title), element('small', '', 'TAG ' + node.day));
       button.addEventListener('click', () => { selectedMapNode = node.id; renderMap(); });
@@ -298,18 +327,30 @@
     const detail = $('#map-detail');
     detail.replaceChildren();
     const selected = mapNodes.find((node) => node.id === selectedMapNode);
-    if (selected) detail.append(element('strong', '', selected.title), element('p', '', selected.detail));
+    if (selected) {
+      detail.append(element('strong', '', selected.title), element('p', '', selected.detail));
+      const related = visible.filter((node) => mapEdges.some(([from, to]) => (from === selected.id && to === node.id) || (to === selected.id && from === node.id)));
+      if (related.length) detail.append(element('small', 'map-related', 'Direkt verbunden mit: ' + related.map((node) => node.title).join(' · ')));
+    }
+    requestAnimationFrame(drawMapEdges);
   }
+  window.addEventListener('resize', drawMapEdges);
 
   const scenes = [
-    { marker: 'SZENE 01 / 03', title: 'Datenpunkt', text: 'Ein technischer Eintrag wirkt eindeutig. Ohne Kontext sagt er aber weniger aus, als zunächst scheint.' },
-    { marker: 'SZENE 02 / 03', title: 'Gegenprüfung', text: 'Ein zweiter Blick verbindet Herkunft, Zeitpunkt und Perspektive. Daraus entsteht eine begründete Frage.' },
-    { marker: 'SZENE 03 / 03', title: 'Einordnung', text: 'Die Auswertung führt Beobachtungen und Lernziel zusammen, statt nur eine Lösung zu präsentieren.' }
+    { marker: 'SZENE 01 / 03', title: 'Datenpunkt', text: 'Ein technischer Eintrag wirkt eindeutig. Ohne Kontext sagt er aber weniger aus, als zunächst scheint.', art: 'source', alt: 'Abstrakte Illustration einer einzelnen Quelle' },
+    { marker: 'SZENE 02 / 03', title: 'Gegenprüfung', text: 'Ein zweiter Blick verbindet Herkunft, Zeitpunkt und Perspektive. Daraus entsteht eine begründete Frage.', art: 'compare', alt: 'Abstrakte Illustration zweier verglichener Perspektiven' },
+    { marker: 'SZENE 03 / 03', title: 'Einordnung', text: 'Die Auswertung führt Beobachtungen und Lernziel zusammen, statt nur eine Lösung zu präsentieren.', art: 'connect', alt: 'Abstrakte Illustration verbundener Erkenntnisse' }
   ];
   let storyIndex = 0;
   function renderStory() {
     const scene = scenes[storyIndex];
-    $('#story-card').replaceChildren(element('small', '', scene.marker), element('strong', '', scene.title), element('p', '', scene.text));
+    const art = element('div', 'story-visual story-visual-' + scene.art);
+    art.setAttribute('role', 'img');
+    art.setAttribute('aria-label', scene.alt);
+    art.append(element('i'), element('i'), element('i'));
+    const copy = element('div', 'story-copy');
+    copy.append(element('small', '', scene.marker), element('strong', '', scene.title), element('p', '', scene.text));
+    $('#story-card').replaceChildren(art, copy);
     $('#story-position').textContent = (storyIndex + 1) + ' / ' + scenes.length;
     $('#story-progress').style.width = ((storyIndex + 1) / scenes.length * 100) + '%';
     $('#story-prev').disabled = storyIndex === 0;
@@ -326,6 +367,7 @@
       item.setAttribute('aria-pressed', String(active));
     });
     $$('.debrief-panel').forEach((panel) => { panel.hidden = panel.id !== 'debrief-' + view; });
+    if (view === 'map') requestAnimationFrame(drawMapEdges);
   }));
   let caveTimeout;
   $('#cave-replay').addEventListener('click', () => {

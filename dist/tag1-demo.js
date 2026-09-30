@@ -1,33 +1,21 @@
 import { createReactorScene } from './reactor-scene.bundle.js';
-import { initialDemoState, auditEligible, canOpenCase, reactorSnapshot, submitDemoCase, applyDemoReview, isQualified } from './tag1-state.js';
+import { initialTourStep, canVisit, nextTourStep, tourSnapshot } from './tag1-state.js';
 
 const $ = (id) => document.getElementById(id);
 const colors = ['#ff865e', '#5ba7ff', '#62d793', '#ffc45d', '#5ed6e5', '#dffaff'];
-const statusLabels = {
-  open: 'Zur Bearbeitung',
-  locked: 'Gesperrt',
-  pending: 'Eingegangen',
-  approved: 'Bestätigt',
-  revision: 'Revision offen',
-};
-
-let state = initialDemoState();
+const topics = ['Internet of Things', 'Big Data', 'Künstliche Intelligenz', 'Blockchain', 'Cloud Computing'];
+let step = initialTourStep();
 let controller = null;
 let ready = false;
 let failed = false;
 let startup = Array(5).fill(false);
 let auditReady = false;
 let positions = [];
-let selectedCase = 0;
 let flying = false;
 let mode = 'map';
 
 function setMessage(message) {
   $('demo-message').textContent = message;
-}
-
-function effectiveStatus(id) {
-  return id > state.activeCase ? 'locked' : state.statuses[id - 1];
 }
 
 function renderLoading() {
@@ -36,14 +24,12 @@ function renderLoading() {
     loading.hidden = true;
     return;
   }
-  const waitingForAudit = auditEligible(state);
-  const activeIndex = Math.min(state.activeCase - 1, 4);
-  loading.hidden = ready && (waitingForAudit ? auditReady : startup[activeIndex]);
+  loading.hidden = ready && (step === 6 ? auditReady : startup[step - 1]);
   loading.textContent = !ready
     ? '3D-Anlage wird geladen …'
-    : waitingForAudit
-      ? 'Auditkern wird vorbereitet …'
-      : `Reaktor ${String(state.activeCase).padStart(2, '0')} wird vorbereitet …`;
+    : step === 6
+      ? 'Auditkern wird für den visuellen Rundgang vorbereitet …'
+      : `Reaktor ${String(step).padStart(2, '0')} wird für den Rundgang vorbereitet …`;
 }
 
 function renderAccess() {
@@ -54,22 +40,21 @@ function renderAccess() {
     const position = positions[index];
     if (!position) continue;
     const id = index + 1;
-    const status = effectiveStatus(id);
-    if (isQualified(status)) continue; // The original scene seals received work.
+    if (id < step) continue;
     const button = document.createElement('button');
     button.type = 'button';
     button.style.left = `${position.x}%`;
     button.style.top = `${position.y}%`;
     button.style.setProperty('--access-color', colors[index]);
-    const available = canOpenCase(state, id) && startup[index];
+    const available = canVisit(step, id) && startup[index];
     button.disabled = !available;
-    const caption = status === 'locked' ? 'GESPERRT' : !startup[index] ? 'STARTET' : status === 'revision' ? 'REVISION' : 'ÖFFNEN';
+    const caption = id > step ? 'NOCH NICHT IM RUNDGANG' : !startup[index] ? 'STARTET' : 'ANSEHEN';
     button.innerHTML = `<strong>REAKTOR ${String(id).padStart(2, '0')}</strong><small>${caption}</small>`;
-    button.setAttribute('aria-label', `Reaktor ${String(id).padStart(2, '0')}: ${caption.toLowerCase()}`);
+    button.setAttribute('aria-label', `Reaktor ${String(id).padStart(2, '0')}, ${topics[index]}: ${caption.toLowerCase()}`);
     button.addEventListener('click', () => enterReactor(id));
     access.append(button);
   }
-  if (auditEligible(state) && auditReady && positions[5]) {
+  if (step === 6 && auditReady && positions[5]) {
     const position = positions[5];
     const button = document.createElement('button');
     button.type = 'button';
@@ -77,153 +62,98 @@ function renderAccess() {
     button.style.left = `${position.x}%`;
     button.style.top = `${position.y}%`;
     button.style.setProperty('--access-color', colors[5]);
-    button.innerHTML = '<strong>REAKTOR 06</strong><small>AUDIT ÖFFNEN</small>';
-    button.setAttribute('aria-label', 'Reaktor 06: Schlussaudit öffnen');
+    button.innerHTML = '<strong>REAKTOR 06</strong><small>AUDITKERN ANSEHEN</small>';
+    button.setAttribute('aria-label', 'Reaktor 06: Auditkern im visuellen Rundgang ansehen');
     button.addEventListener('click', () => enterReactor(6));
     access.append(button);
   }
-}
-
-function renderReview() {
-  const target = $('review-target');
-  const old = target.value;
-  target.replaceChildren();
-  const pending = state.statuses.map((status, index) => status === 'pending' ? index + 1 : 0).filter(Boolean);
-  if (!pending.length) {
-    target.add(new Option('Noch keine eingegangene Abgabe', ''));
-  } else {
-    for (const id of pending) target.add(new Option(`Reaktor ${String(id).padStart(2, '0')}`, String(id)));
-    if (pending.includes(Number(old))) target.value = old;
-  }
-  $('review-revision').disabled = !pending.length;
-  $('review-approve').disabled = !pending.length;
 }
 
 function renderStatusList() {
   const list = $('reactor-status-list');
   list.replaceChildren();
   for (let id = 1; id <= 5; id += 1) {
-    const status = effectiveStatus(id);
     const row = document.createElement('li');
-    row.className = `${isQualified(status) ? 'qualified ' : ''}${status}`;
-    row.innerHTML = `<strong>${String(id).padStart(2, '0')} · REAKTOR</strong><span>${statusLabels[status]}</span>`;
+    row.className = id < step ? 'qualified' : id === step ? 'open' : 'locked';
+    row.innerHTML = `<strong>${String(id).padStart(2, '0')} · REAKTOR</strong><em>${topics[id - 1]}</em><span>${id < step ? 'Im Rundgang gezeigt' : id === step ? 'Aktuelle Ansicht' : 'Folgt im Rundgang'}</span>`;
     list.append(row);
   }
-  const count = state.statuses.filter(isQualified).length;
-  $('map-progress').textContent = `${count} / 5 qualifizierte Musterabgaben · Audit ${auditEligible(state) ? 'freigegeben' : 'gesperrt'}`;
-  $('map-panel').querySelector('h2').textContent = auditEligible(state)
-    ? 'Der Auditkern öffnet sich.'
-    : `Reaktor ${String(Math.min(state.activeCase, 5)).padStart(2, '0')} ist ${startup[Math.min(state.activeCase - 1, 4)] ? 'bereit' : 'im Aufbau'}.`;
+  $('map-progress').textContent = `Visueller Rundgang · ${Math.min(step - 1, 5)} von 5 Reaktoransichten gezeigt${step === 6 ? ' · Auditkern sichtbar' : ''}`;
+  $('map-panel').querySelector('h2').textContent = step === 6
+    ? 'Der Auditkern erscheint im Rundgang.'
+    : `Reaktor ${String(step).padStart(2, '0')} ${startup[step - 1] ? 'ist bereit' : 'wird vorbereitet'}.`;
+  $('current-topic').textContent = step === 6 ? 'Abschlussknoten / Schlussaudit' : `Technologie ${String(step).padStart(2, '0')} / ${topics[step - 1]}`;
 }
 
-function renderPanels() {
+function render() {
+  renderStatusList();
   $('map-panel').hidden = mode !== 'map';
   $('case-panel').hidden = mode !== 'case';
   $('audit-panel').hidden = mode !== 'audit';
   $('flight-status').hidden = mode !== 'flight';
   renderLoading();
-}
-
-function render() {
-  renderStatusList();
-  renderReview();
-  renderPanels();
   renderAccess();
 }
 
 function enterReactor(id) {
-  if (!ready || failed || flying || !canOpenCase(state, id) || (id === 6 ? !auditReady : !startup[id - 1])) return;
+  if (!ready || failed || flying || !canVisit(step, id) || (id === 6 ? !auditReady : !startup[id - 1])) return;
   flying = true;
   mode = 'flight';
-  $('flight-status').textContent = `REAKTOR ${String(id).padStart(2, '0')} · ZUGANG WIRD GEÖFFNET`;
-  setMessage(`Kamerafahrt zu Reaktor ${String(id).padStart(2, '0')} läuft.`);
+  $('flight-status').textContent = `REAKTOR ${String(id).padStart(2, '0')} · KAMERAFAHRT`;
+  setMessage(`Originale Kamerafahrt zu Reaktor ${String(id).padStart(2, '0')} läuft.`);
   render();
   controller.fly(id - 1);
 }
 
 function returnToMap() {
-  selectedCase = 0;
   mode = 'map';
   controller?.overview();
   render();
   $('reactor-stage').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function showCase(id) {
-  selectedCase = id;
+function showView(id) {
   flying = false;
   mode = id === 6 ? 'audit' : 'case';
   $('flight-status').hidden = true;
   if (id < 6) {
-    $('case-title').textContent = `Reaktor ${String(id).padStart(2, '0')}${state.statuses[id - 1] === 'revision' ? ' · Revision' : ''}`;
-    $('case-decision').value = state.decisions[id - 1];
-    $('case-note').value = state.notes[id - 1];
-    $('case-error').hidden = true;
-    setMessage(`Reaktor ${String(id).padStart(2, '0')} geöffnet. Musterentscheidung und Belegvermerk können eingegeben werden.`);
+    $('case-title').textContent = `Reaktor ${String(id).padStart(2, '0')}`;
+    $('case-topic').textContent = topics[id - 1];
+    $('tour-next').textContent = id === 5 ? 'Auditkern im Rundgang ansehen →' : `Reaktor ${String(id + 1).padStart(2, '0')} im Rundgang ansehen →`;
+    setMessage(`Reaktor ${String(id).padStart(2, '0')} im originalen 3D-Modell gezeigt. Fachliche Originalfälle werden hier nicht gespielt.`);
   } else {
-    setMessage('Der Schlussaudit ist nach fünf qualifizierten Abgaben freigegeben.');
+    setMessage('Auditkern im Kamerarundgang gezeigt. Das ist keine fachliche Freigabe.');
   }
   render();
   if (matchMedia('(max-width: 980px)').matches) $('reactor-side').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-$('case-form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const id = selectedCase;
-  try {
-    const wasRevision = state.statuses[id - 1] === 'revision';
-    state = submitDemoCase(state, id, $('case-decision').value, $('case-note').value);
-    $('case-error').hidden = true;
-    controller.update(reactorSnapshot(state));
-    returnToMap();
-    setMessage(wasRevision
-      ? `Reaktor ${String(id).padStart(2, '0')}: Revision erneut eingegangen und versiegelt. Der bisherige Fortschritt bleibt erhalten.`
-      : `Reaktor ${String(id).padStart(2, '0')}: Musterabgabe eingegangen und versiegelt. ${id < 5 ? `Reaktor ${String(id + 1).padStart(2, '0')} wird freigegeben.` : 'Der Auditkern prüft fünf qualifizierte Abgaben.'}`);
-  } catch (error) {
-    $('case-error').textContent = error.message;
-    $('case-error').hidden = false;
-  }
+$('tour-next').addEventListener('click', () => {
+  if (mode !== 'case' || step >= 6) return;
+  step = nextTourStep(step);
+  controller.update(tourSnapshot(step));
+  returnToMap();
+  setMessage(step === 6
+    ? 'Für den visuellen Rundgang wird jetzt der Auditkern gezeigt; es wurde keine Fallabgabe durchgeführt.'
+    : `Reaktor ${String(step).padStart(2, '0')} wird im visuellen Rundgang vorbereitet. Es wurde keine Fallabgabe durchgeführt.`);
 });
-
 $('case-back').addEventListener('click', returnToMap);
 $('audit-back').addEventListener('click', returnToMap);
 $('demo-reset').addEventListener('click', () => {
-  state = initialDemoState();
-  selectedCase = 0;
+  step = initialTourStep();
   mode = 'map';
-  controller?.update(reactorSnapshot(state));
+  controller?.update(tourSnapshot(step));
   controller?.overview();
   render();
-  setMessage('Demostand zurückgesetzt. Reaktor 01 ist wieder der einzige zugängliche Prüfstand.');
+  setMessage('Rundgang zurückgesetzt. Reaktor 01 ist wieder die erste Ansicht.');
 });
-
-function review(action) {
-  const id = Number($('review-target').value);
-  try {
-    state = applyDemoReview(state, id, action);
-    controller?.update(reactorSnapshot(state));
-    if (action === 'revision' && mode === 'audit') {
-      selectedCase = 0;
-      mode = 'map';
-      controller?.overview();
-    }
-    render();
-    setMessage(action === 'revision'
-      ? `Externes Leitungsereignis: Reaktor ${String(id).padStart(2, '0')} ist zur Revision geöffnet. Der Auditkern ist wieder gesperrt.`
-      : `Externes Leitungsereignis: Abgabe von Reaktor ${String(id).padStart(2, '0')} bestätigt.`);
-  } catch (error) {
-    setMessage(error.message);
-  }
-}
-$('review-revision').addEventListener('click', () => review('revision'));
-$('review-approve').addEventListener('click', () => review('approved'));
 
 render();
 try {
   controller = createReactorScene({
     stage: $('reactor-stage'),
     canvas: $('reactor-canvas'),
-    snapshot: reactorSnapshot(state),
+    snapshot: tourSnapshot(step),
     onReady(value) {
       ready = value;
       render();
@@ -232,9 +162,9 @@ try {
     onStartup(value) {
       startup = value;
       render();
-      if (value[0] && mode === 'map') setMessage('Reaktor 01 ist im 3D-Bild bedienbar. Reaktoren 02–05 bleiben zunächst gesperrt.');
+      if (value[step - 1] && mode === 'map') setMessage(`Reaktor ${String(step).padStart(2, '0')} ist im 3D-Bild für den Rundgang bedienbar.`);
     },
-    onAuditReady(value) { auditReady = value; renderAccess(); },
+    onAuditReady(value) { auditReady = value; renderAccess(); renderLoading(); },
     onLayout(value) { positions = value; renderAccess(); },
     onFlightPhase(value) {
       if (mode !== 'flight') return;
@@ -242,16 +172,16 @@ try {
       $('flight-status').textContent = labels[value] || 'REAKTORZUGANG WIRD GEÖFFNET';
     },
     onFlightEnd(id) {
-      if (!canOpenCase(state, id)) { returnToMap(); return; }
+      if (!canVisit(step, id)) { returnToMap(); return; }
       controller.detail(id - 1);
-      showCase(id);
+      showView(id);
     },
     onError() {
       failed = true;
       ready = false;
       $('reactor-fallback').hidden = false;
       render();
-      setMessage('Die 3D-Anlage ist in diesem Browser nicht verfügbar. Die statische QA-Aufnahme wird ausdrücklich nicht als funktionierende Simulation ausgegeben.');
+      setMessage('Die 3D-Anlage ist in diesem Browser nicht verfügbar. Die statische QA-Aufnahme wird nicht als Simulation ausgegeben.');
     },
   });
 } catch {

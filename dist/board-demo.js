@@ -378,6 +378,21 @@
     state.ty = 60 - y0 * state.scale;
     transform();
   }
+  function focusInitialEvidencePath() {
+    const view = $('#board-viewport');
+    if (view.clientWidth < 700) { fit(); return; }
+    // Keep the document, its marked evidence card and their connection readable.
+    // "Einpassen" still shows every card after the visitor has explored this path.
+    const focusEntries = state.entries.filter((entry) => entry.id !== 'n1');
+    const x0 = Math.min(...focusEntries.map((entry) => entry.x));
+    const x1 = Math.max(...focusEntries.map((entry) => entry.x + 246));
+    const y0 = Math.min(...focusEntries.map((entry) => entry.y));
+    const y1 = Math.max(...focusEntries.map((entry) => entry.y + (entry.kind === 'document' ? 430 : 290)));
+    state.scale = Math.max(.65, Math.min(.9, (view.clientWidth - 90) / (x1 - x0), (view.clientHeight - 45) / (y1 - y0)));
+    state.tx = (view.clientWidth - (x1 - x0) * state.scale) / 2 - x0 * state.scale;
+    state.ty = 18 - y0 * state.scale;
+    transform();
+  }
   function focusEntry(entry) {
     const view = $('#board-viewport');
     state.tx = view.clientWidth / 2 - (entry.x + 123) * state.scale;
@@ -539,5 +554,5 @@
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !$('#document-reader').open) hidePanel(); });
   render();
   transform();
-  requestAnimationFrame(fit);
+  requestAnimationFrame(focusInitialEvidencePath);
 })();

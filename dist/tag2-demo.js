@@ -7,13 +7,13 @@
     lobby: ['L&B EINSATZLOBBY', 'Anmeldung vor dem gemeinsamen Start', 'LOBBY'],
     intro: ['L&B PRESSEARCHIV // BESTAND 2014', 'Rekonstruiertes Pressearchiv', 'ARCHIV'],
     group: ['SEGMENTZUWEISUNG', 'Arbeitsbereiche zuordnen', 'A–V'],
-    archive: ['ARCHIVSEGMENT', 'Fiktive Unterlagen und zugeordnete Aufzeichnungen', 'GRUPPE'],
+    archive: ['ARCHIVSEGMENT', 'Getrennte Lesefläche · Originalinhalt verdeckt', 'GRUPPE'],
   };
   const stages = {
     lobby: ['01 / 04 · LOBBY', 'Die Lobby registriert ein Gerät. Die Leitung kann den gemeinsamen Start auslösen.'],
-    intro: ['02 / 04 · PRESSEARCHIV', 'Originalansicht und Transkript gehören zum selben Dokument. Die Rätselantwort ist in dieser Vorschau ausgelassen.'],
-    group: ['03 / 04 · SEGMENTZUWEISUNG', 'Wählen Sie A, B, C, D oder V. Unterschiedliche Bereiche erhalten unterschiedliche Unterlagen. E folgt später.'],
-    archive: ['04 / 04 · GRUPPENARCHIV', 'Navigation und Inhalt wechseln mit der Gruppe. Hier sehen Sie ausschließlich fiktive Dokumente.'],
+    intro: ['02 / 04 · PRESSEARCHIV', 'Artikelansicht und Transkript gehören im Original zum selben Dokument. Der geschützte Inhalt ist hier verdeckt.'],
+    group: ['03 / 04 · SEGMENTZUWEISUNG', 'A, B, C, D oder V zeigen getrennte Ansichtsbereiche. E folgt später. Diese Vorschau nimmt keine Gruppenzuordnung vor.'],
+    archive: ['04 / 04 · GRUPPENARCHIV', 'Die Navigation zeigt Dokument-, Audio- und Freigabebereiche; gruppenspezifische Inhalte bleiben verdeckt.'],
   };
 
   function view(which) {
@@ -34,10 +34,10 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'group-card' + (chosen === group ? ' selected' : '');
-      button.innerHTML = `<span>GRUPPE ${group}</span><strong>BEISPIELBEREICH</strong>`;
+      button.innerHTML = `<span>GRUPPE ${group}</span><strong>ANSICHT ANSEHEN</strong>`;
       button.addEventListener('click', () => {
         pending = group;
-        $('confirmText').textContent = `Gruppe ${group} auswählen?`;
+        $('confirmText').textContent = `Ansichtsbereich ${group} öffnen?`;
         $('groupConfirm').classList.remove('hidden');
       });
       container.append(button);
@@ -45,13 +45,13 @@
   }
 
   function doc(key) {
-    const titles = { report: 'Beispielprotokoll', timeline: 'Zeitlinie', notice: 'Hinweis' };
+    const titles = { report: 'Unterlagen', timeline: 'Audio', notice: 'Freigaben' };
     const descriptions = {
-      report: `Dieser neutrale Auszug demonstriert die Lesefläche für Gruppe ${chosen}. Im Original sind hier gruppenspezifische Quellen eingebunden.`,
-      timeline: 'Eine zeitliche Ordnung kann andere Unterlagen ergänzen. Auch dieser Text ist erfunden und enthält keine Hinweise auf den Spielverlauf.',
-      notice: 'Die konkrete Freigabe hängt im Originalsystem von Phase, Gruppenstand und Zeitfenster ab.',
+      report: `Im Original stehen für Bereich ${chosen} eigene Quellen und Unterlagen bereit. Diese öffentliche Ansicht zeigt die Lesefläche, aber weder Titel noch Inhalte der geschützten Dokumente.`,
+      timeline: `Im Original sind Audio und weitere Medien dem Ermittlungsweg zugeordnet. Diese öffentliche Ansicht spielt kein Audio ab und verrät keine Titel oder Inhalte.`,
+      notice: 'Im Original hängen die sichtbaren Bestandteile vom Gruppenstand, Zeitfenster und weiteren Freigaben ab. Diese Vorschau prüft oder erteilt keine solche Freigabe.',
     };
-    $('archiveText').innerHTML = `<div class="archive-prose"><small>ÖFFENTLICHE DEMO // GRUPPE ${chosen}</small><h3>${titles[key]}</h3><p>${descriptions[key]}</p><aside>Die echte Oberfläche behält Navigation und Lesebereich bei. Diese Beispielinhalte ersetzen alle Originalunterlagen.</aside></div>`;
+    $('archiveText').innerHTML = `<div class="archive-prose"><small>ANSICHTSRUNDGANG // BEREICH ${chosen}</small><h3>${titles[key]} · geschützter Inhalt</h3><p>${descriptions[key]}</p><aside>Dieser Wechsel zeigt nur die Oberfläche. Er ist weder Gruppenbeitritt noch Ermittlungsentscheidung.</aside></div>`;
     document.querySelectorAll('#archiveNav button').forEach((button) => button.classList.toggle('active', button.dataset.doc === key));
   }
 

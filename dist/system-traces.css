@@ -1,0 +1,49 @@
+.system-traces{padding:4.5rem 0;background:radial-gradient(circle at 80% 10%,#17312b,#071311 58%)}
+.trace-disclosure{margin:1.5rem 0 2rem;padding:.8rem 1rem;border-left:3px solid var(--green);background:#11271d;color:#c2ddcb;font-size:.81rem;line-height:1.5}
+.trace-card{margin:1.3rem 0 2rem;border:1px solid #315344;background:#0c1917;overflow:hidden}
+.trace-intro{padding:1.35rem 1.5rem}
+.trace-intro>span{color:var(--green);font:700 .68rem/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.12em}
+.trace-intro h3{margin:.5rem 0;color:#f1fff4;font-size:clamp(1.35rem,2.5vw,2rem)}
+.trace-intro p{margin:0;max-width:58rem;color:#b9cfc2;font-size:.86rem;line-height:1.55}
+.trace-tabs{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid #315344;border-bottom:1px solid #315344;background:#0b1916}
+.trace-tabs button{flex:1 1 9rem;min-height:2.9rem;padding:.6rem .8rem;border:0;border-right:1px solid #315344;background:transparent;color:#a7c2b2;font:700 .68rem/1.3 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em;cursor:pointer}
+.trace-tabs button:last-child{border-right:0}
+.trace-tabs button:hover,.trace-tabs button[aria-pressed=true]{background:#173b2a;color:#d9ffe3}
+.trace-tabs button[aria-pressed=true]{box-shadow:inset 0 -3px var(--green)}
+.trace-tabs button:focus-visible{outline:2px solid #e2ffd9;outline-offset:-3px}
+.trace-five button{flex-basis:10rem}
+.trace-view{min-height:19rem;padding:1.2rem;background:#071110}
+.trace-caption{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #315344}
+.trace-caption>div{min-width:0;padding:1rem;border-right:1px solid #315344}
+.trace-caption>div:last-child{border-right:0}
+.trace-caption small{display:block;margin-bottom:.5rem;color:var(--green);font:700 .61rem/1.35 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.1em}
+.trace-caption span{color:#bfdbc8;font-size:.78rem;line-height:1.5}
+.trace-quiz-view{background:radial-gradient(circle at 70% 20%,#172e3b,#08141c 65%);color:#e9f8fa}
+.quiz-host,.quiz-question{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(13rem,.6fr);gap:1.2rem;min-height:18rem}
+.quiz-host>div:first-child,.quiz-question>div:first-child,.quiz-result{padding:1.4rem;border:1px solid #335566;background:#0c2030}
+.trace-quiz-view small{display:block;margin-bottom:.8rem;color:#71e2df;font:700 .68rem ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.1em}
+.trace-quiz-view strong{display:block;color:#f1ffff;font-size:clamp(1.25rem,2vw,1.85rem)}
+.trace-quiz-view p,.trace-quiz-view span{color:#bdd8de;font-size:.8rem;line-height:1.5}
+.quiz-code{display:grid;place-items:center;width:6rem;height:6rem;margin:.8rem 0;border:9px solid #e1f7f1;background:repeating-linear-gradient(90deg,#15333e 0 5px,#edf9f3 5px 10px);color:#0b1c22;font:900 .55rem ui-monospace,SFMono-Regular,Consolas,monospace;text-shadow:0 1px #fff}
+.quiz-device{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:1rem;border:5px solid #506973;border-radius:1.4rem;background:#0e2231;box-shadow:0 0 0 3px #07131b}
+.quiz-device strong{font-size:1rem}.quiz-avatar{display:grid;place-items:center;width:5rem;height:5rem;margin:1.1rem;border:1px solid #66e2d2;border-radius:50%;color:#70eada;font-size:2.8rem;box-shadow:0 0 2rem #45dfc944}
+.quiz-progress{height:.5rem;margin:2rem 0 .5rem;background:#29454c}.quiz-progress i{display:block;width:58%;height:100%;background:#66e3d3}
+.quiz-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;width:100%;margin:1rem 0}.quiz-tiles span{display:grid;place-items:center;min-height:3.5rem;border:1px solid #4a818d;background:#153b49;color:#8cece6;font:700 1.1rem ui-monospace,SFMono-Regular,Consolas,monospace}
+.quiz-result{min-height:18rem}.quiz-rank{display:flex;align-items:center;gap:1rem;margin:.8rem 0}.quiz-rank span{width:7rem;flex:none}.quiz-rank i{display:block;height:.7rem;background:#69dad2;box-shadow:0 0 1rem #57e9db66}
+.trace-archive-view{background:#07100f;color:#d8f4e3}
+.archive-preview-head{display:flex;justify-content:space-between;gap:1rem;padding:1rem 1.1rem;border:1px solid #294e3b;border-bottom:0;background:#0c1c17}
+.archive-preview-head span{color:#48ef99;font:700 .66rem ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.1em}.archive-preview-head strong{font-size:.95rem}
+.archive-preview-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid #294e3b;background:#294e3b}
+.archive-preview-split>div{padding:1.15rem;background:#0a1613}
+.archive-preview-split small{display:block;margin-bottom:1rem;color:#4df39c;font:700 .64rem ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.1em}
+.archive-source,.archive-field{display:flex;justify-content:space-between;align-items:center;gap:1rem;min-height:2.65rem;margin:.5rem 0;padding:.55rem .75rem;border:1px solid #28483a;color:#c8e2d0;font-size:.79rem}
+.archive-source span{color:#55f3a5}.archive-field{display:block}.archive-field span{display:block;color:#a8c5b1;font-size:.69rem}.archive-field i{display:block;margin-top:.32rem;color:#d3e9d9;font-style:normal}
+.archive-action{display:inline-block;margin-top:.65rem;padding:.7rem .9rem;border:1px dashed #3aa96d;background:#10241a;color:#b8efcc;font-size:.78rem;font-weight:700}
+.trace-handoff-view{background:#070c0c}
+.handoff-terminal{min-height:18rem;padding:1.3rem;border:1px solid #345944;background:#0d1718}
+.terminal-top{display:flex;justify-content:space-between;gap:1rem;border-bottom:1px solid #345944;padding-bottom:.8rem;color:#daf7e4}.terminal-top b{font:600 .9rem ui-monospace,SFMono-Regular,Consolas,monospace}.terminal-top span{color:#52ef9c;font:700 .64rem ui-monospace,SFMono-Regular,Consolas,monospace}
+.handoff-terminal code{display:block;margin:1.1rem 0;color:#a0efba;font:400 .83rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-line}
+.terminal-cta{display:inline-block;padding:.65rem .85rem;border:1px dashed #669b76;color:#bad4c4;font-size:.76rem}
+.terminal-meter{height:.4rem;margin-top:1.2rem;background:#263c31}.terminal-meter i{display:block;height:100%;background:#4fee93}
+@media(max-width:900px){.trace-caption{grid-template-columns:repeat(2,minmax(0,1fr))}.trace-caption>div:nth-child(2){border-right:0}.trace-caption>div:nth-child(-n+2){border-bottom:1px solid #315344}}
+@media(max-width:620px){.system-traces{padding:3rem 0}.trace-card{margin-bottom:1.5rem}.trace-intro{padding:1rem}.trace-tabs button{flex-basis:33%;font-size:.61rem}.trace-five button{flex-basis:33%}.trace-view{padding:.8rem}.quiz-host,.quiz-question,.archive-preview-split{grid-template-columns:1fr}.quiz-device{max-width:17rem;margin:auto}.trace-caption{grid-template-columns:1fr}.trace-caption>div{border-right:0;border-bottom:1px solid #315344!important}.trace-caption>div:last-child{border-bottom:0!important}.archive-preview-head{display:block}.archive-preview-head strong{display:block;margin-top:.45rem}}

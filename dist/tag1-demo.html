@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Tag 1 · NEXUS FIVE · technische Demonstration</title>
-  <link rel="stylesheet" href="tag1-demo.css?v=4">
-  <script type="module" src="tag1-demo.js?v=4"></script>
+  <link rel="stylesheet" href="tag1-demo.css?v=6">
+  <script type="module" src="tag1-demo.js?v=6"></script>
 </head>
 <body>
   <header><a href="./index.html#erleben">← Systemprofil</a><span>NEXUS FIVE / TAG 01</span><span>ISOLIERTE DEMO</span></header>
   <main>
     <section class="intro">
-      <span class="kicker">ORIGINALE 3D-REAKTORANLAGE · FIKTIVE DEMODATEN</span>
-      <h1>Die Anlage reagiert auf Entscheidungen.</h1>
-      <p>Öffne Reaktor 01 direkt in der Anlage. Die originale Kamerafahrt führt in den Kern; der anschließende Musterfall zeigt getrennte Abgabe-, Leitungs- und Freigabezustände. Es werden keine Spielstände berührt und keine Originalantworten gezeigt.</p>
+      <span class="kicker">ORIGINALE 3D-REAKTORANLAGE · ÖFFENTLICHER KAMERARUNDGANG</span>
+      <h1>Die Anlage von innen sehen.</h1>
+      <p>Öffne Reaktor 01 direkt in der Anlage. Die originale Kamerafahrt führt in den Kern. Anschließend kannst du die weiteren Reaktoransichten und den Auditkern nacheinander ansehen. Die fachlichen Fälle und ihre Belege sind nicht öffentlich freigegeben; dieser Rundgang enthält deshalb keine Spielaufgabe oder Abgabe.</p>
     </section>
 
     <section class="reactor-layout" aria-label="Interaktive Reaktordemonstration">
@@ -35,35 +35,26 @@
         <div id="map-panel" class="side-panel">
           <span class="kicker">SYSTEMKERN / TEILNEHMERANSICHT</span>
           <h2>Reaktor 01 ist bereit.</h2>
-          <p>Klicke auf den aktiven Zugang direkt in der Anlage. Weitere Kammern werden erst nach einer Abgabe erreichbar. Gesperrte Kammern sind sichtbar, aber nicht bedienbar.</p>
-          <p id="map-progress" class="progress-copy">0 / 5 qualifizierte Musterabgaben</p>
-          <button id="demo-reset" type="button" class="quiet-button">Demostand zurücksetzen</button>
+          <p id="current-topic" class="reactor-topic">Technologie 01 / Internet of Things</p>
+          <p>Klicke auf den aktiven Zugang direkt in der Anlage. Im öffentlichen Rundgang folgen die Kammern nacheinander; das ist keine Freigabe durch eine fachliche Prüfung.</p>
+          <p id="map-progress" class="progress-copy">Visueller Rundgang · 0 von 5 Reaktoransichten gezeigt</p>
+          <button id="demo-reset" type="button" class="quiet-button">Rundgang neu beginnen</button>
         </div>
 
         <div id="case-panel" class="side-panel" hidden>
-          <span class="kicker">SYNTHETISCHER MUSTERFALL</span>
+          <span class="kicker">ORIGINALER 3D-ZUGANG · KEINE FALLBEARBEITUNG</span>
           <h2 id="case-title">Reaktor 01</h2>
-          <p id="case-copy">Dieser Kurzfall ist nur ein Platzhalter für den technischen Ablauf; er enthält keine Spielaufgabe und keine Lösung.</p>
-          <form id="case-form" novalidate>
-            <label for="case-decision">Prüfentscheidung</label>
-            <select id="case-decision" required>
-              <option value="">Bitte wählen</option>
-              <option value="plausibel">Musterquelle plausibel</option>
-              <option value="unklar">Musterquelle unklar</option>
-              <option value="widerspruch">Widerspruch festhalten</option>
-            </select>
-            <label for="case-note">Kurzer Belegvermerk</label>
-            <textarea id="case-note" rows="5" placeholder="Welche fiktive Beobachtung stützt dein Votum?" required></textarea>
-            <p id="case-error" class="field-error" role="alert" hidden></p>
-            <button type="submit" class="primary-button">Musterfall abgeben</button>
-          </form>
+          <p id="case-topic" class="reactor-topic">Internet of Things</p>
+          <p>Die Kamerafahrt und die Anlage stammen aus NEXUS FIVE. Im Spiel folgt hier ein eigener fachlicher Fall mit Quellen, Medien und Belegen. Diese Inhalte sind für die öffentliche Seite nicht freigegeben und werden deshalb nicht durch eine erfundene Prüfentscheidung ersetzt.</p>
+          <p>Der nächste Schritt verändert ausschließlich die visuelle Rundgangsansicht. Er reicht nichts ein und schaltet im Originalspiel nichts frei.</p>
+          <button id="tour-next" type="button" class="primary-button">Nächste Ansicht im Rundgang →</button>
           <button id="case-back" type="button" class="quiet-button">← Zur Anlage</button>
         </div>
 
         <div id="audit-panel" class="side-panel" hidden>
           <span class="kicker">REAKTOR 06 / SCHLUSSAUDIT</span>
-          <h2>Prüfgrundlage erreicht.</h2>
-          <p>Fünf qualifizierte Musterabgaben haben den zentralen Zugang geöffnet. Eine spätere Revision würde ihn wieder sperren. Der eigentliche Auditinhalt und die Spielantworten gehören nicht in diese öffentliche Vorschau.</p>
+          <h2>Der Auditkern im Rundgang.</h2>
+          <p>Im Original öffnet sich dieser Zugang erst nach fünf qualifizierten Fallbearbeitungen; gezielte Revisionen können ihn wieder sperren. Hier wird nur die originale räumliche Ansicht vorgeführt. Es fand keine fachliche Prüfung und keine Freigabe statt.</p>
           <button id="audit-back" type="button" class="quiet-button">← Zur Anlage</button>
         </div>
       </aside>
@@ -71,25 +62,12 @@
 
     <p id="demo-message" class="demo-message" role="status">Die Anlage lädt. Nach der Startsequenz ist Reaktor 01 direkt im Bild bedienbar.</p>
 
-    <details class="director-demo">
-      <summary>Externes Leitungsereignis simulieren</summary>
-      <div class="director-inner">
-        <p>Die folgenden Knöpfe gehören ausdrücklich nicht zur Teilnehmeransicht. Sie demonstrieren eine getrennte Prüfung einer bereits eingegangenen Musterabgabe.</p>
-        <label for="review-target">Eingegangene Abgabe</label>
-        <select id="review-target"></select>
-        <div class="director-actions">
-          <button id="review-revision" type="button">Zur Revision öffnen</button>
-          <button id="review-approve" type="button">Abgabe bestätigen</button>
-        </div>
-      </div>
-    </details>
-
     <section class="explanation">
       <span class="kicker">WAS HIER WIRKLICH GEZEIGT WIRD</span>
-      <h2>Ein visueller Zugang, ein zustandsgebundener Ablauf.</h2>
-      <p>Das 3D-Modell und die Kamerafahrt stammen aus der freigegebenen Reaktoranlage. Nur die kurzen Musterentscheidungen sind für dieses öffentliche Profil erfunden. Die Demo zeigt nacheinander: gesperrter Zugang → Fallbearbeitung → eingegangene Abgabe → nächste Kammer → mögliche Leitungsrevision → Schlussaudit-Sperre oder -Freigabe. Das Originalspiel prüft deutlich mehr Eingaben und Belege serverseitig.</p>
+      <h2>Echte Anlage, bewusst begrenzter Einblick.</h2>
+      <p>Das 3D-Modell und die Kamerafahrt stammen aus der freigegebenen Reaktoranlage. Die nacheinander gezeigten Zugänge sind ein Kamerarundgang, keine Simulation der fachlichen Aufgaben. In NEXUS FIVE bearbeiten Teilnehmende fünf Technologiefälle mit Belegen und Entwürfen. Der Server verfolgt Abgaben und Prüfstatus; eine Revision öffnet nur den betroffenen Reaktor erneut. Der Schlussaudit bleibt bis zu fünf qualifizierten Bearbeitungen gesperrt. Keine dieser fachlichen Entscheidungen wird auf dieser öffentlichen Seite nachgespielt.</p>
     </section>
   </main>
-  <footer>Öffentliche, isolierte Funktionsvorschau. Keine Produktions-API, keine echten Teilnehmenden und keine Originalantworten.</footer>
+  <footer>Öffentlicher 3D-Rundgang. Keine Produktions-API, keine fachliche Prüfung und keine Originalantworten.</footer>
 </body>
 </html>
